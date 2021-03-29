@@ -7,12 +7,12 @@ body {
 
 #mainContainer {
   display: flex;
+  border: 1px solid darkblue;
   flex-flow: column nowrap;
-  margin: 100px;
+  margin: auto;
+  margin-top: 2rem;
   width: 80vw;
   height: 80vh;
-  justify-content: center;
-  align-items: stretch;
 }
 #controlsContainer {
   display: inline-block;
@@ -21,7 +21,14 @@ body {
   left: 1.5rem;
   padding: 0.5rem 1.5rem 0.5rem 1.5rem;
   border-radius: 2rem;
+  font-size: 1rem;
+  color: rgb(0, 75, 146);
   background-color: rgba(252, 192, 124, 0.151);
+  text-align: center;
+}
+
+#toggleDiv {
+  text-align: center;
 }
 
 .divGrid {
@@ -40,7 +47,7 @@ button {
   background-color: white;
   border: 1px solid rgb(2, 93, 116);
   border-radius: 4px;
-  font-size: 1rem;
   color: rgb(0, 75, 146);
+  font-size: 1rem;
   margin: 4px;
 }

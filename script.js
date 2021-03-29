@@ -1,11 +1,29 @@
 const mainContainer = document.querySelector("#mainContainer");
 const newButton = document.querySelector("#newGridButton");
 const clearButton = document.querySelector("#clearGridButton");
+const brushToggle = document.querySelector("#toggleBrush");
+let brush = true;
+brushToggle.checked = brush;
+
+window.addEventListener("keydown", grabToggleKey);
 
 newButton.addEventListener("click", makeNewGrid);
 clearButton.addEventListener("click", clearGrid);
+brushToggle.addEventListener("click", changeBrushState);
 
-makeGridElements(32);
+function changeBrushState() {
+  brush === true ? (brush = false) : (brush = true);
+}
+function grabToggleKey(e) {
+  if (e.keyCode === 32) {
+    changeBrushState();
+    brushToggle.checked === true
+      ? (brushToggle.checked = false)
+      : (brushToggle.checked = true);
+  }
+}
+
+makeGridElements(16);
 
 function makeGridElements(number) {
   for (let i = 0; i < number; i++) {
@@ -24,9 +42,11 @@ function makeGridElements(number) {
 
   function setupDivElement(elementName) {
     elementName.classList.add("divGrid");
-    elementName.addEventListener("mouseover", () =>
-      elementName.classList.add("divGridHover")
-    );
+    elementName.addEventListener("mouseover", () => {
+      if (brush === true) {
+        elementName.classList.add("divGridHover");
+      }
+    });
   }
 }
 
