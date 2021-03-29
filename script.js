@@ -57,9 +57,11 @@ function makeNewGrid() {
     mainContainer.removeChild(mainContainer.lastChild);
   }
   makeGridElements(newGridSize);
+  this.blur();
 }
 
 function clearGrid() {
   let paintedDivs = document.querySelectorAll(".divGridHover");
   paintedDivs.forEach((x) => x.classList.remove("divGridHover"));
+  this.blur();
 }
