@@ -1,0 +1,46 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+#mainContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 100px;
+  width: 80vw;
+  height: 80vh;
+  justify-content: center;
+  align-items: stretch;
+}
+#controlsContainer {
+  display: inline-block;
+  position: sticky;
+  top: 1.5rem;
+  left: 1.5rem;
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  border-radius: 2rem;
+  background-color: rgba(252, 192, 124, 0.151);
+}
+
+.divGrid {
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1;
+  max-width: 1fr;
+  background-color: white;
+}
+
+.divGridHover {
+  background-color: rgb(0, 38, 73);
+}
+
+button {
+  background-color: white;
+  border: 1px solid rgb(2, 93, 116);
+  border-radius: 4px;
+  font-size: 1rem;
+  color: rgb(0, 75, 146);
+  margin: 4px;
+}
