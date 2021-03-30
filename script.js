@@ -23,7 +23,7 @@ function grabToggleKey(e) {
   }
 }
 
-makeGridElements(16);
+makeGridElements(32);
 
 function makeGridElements(number) {
   for (let i = 0; i < number; i++) {

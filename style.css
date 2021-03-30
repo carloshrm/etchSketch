@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 #mainContainer {
@@ -28,14 +28,19 @@ body {
 }
 
 #toggleDiv {
-  text-align: center;
+  display: flex;
+  background-color: white;
+  border: 1px solid darkblue;
+  border-radius: 4px;
+}
+label[for="toggleBrush"] {
+  padding: 0.2rem;
 }
 
 .divGrid {
   display: flex;
-  flex-flow: row nowrap;
   flex: 1;
-  max-width: 1fr;
+  flex-flow: row nowrap;
   background-color: white;
 }
 
