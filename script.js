@@ -7,7 +7,14 @@ let brush = true;
 brushToggle.checked = brush;
 let colorToggle = false;
 randomColorToggle.checked = colorToggle;
-let colorSelection = "#00d0c0";
+let color = "rgb(0,255,0)";
+
+<!-- prettier-ignore-start -->
+function colorSelection(e) {    
+  let parsedColor = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);
+  e.srcElement.style.backgroundColor = `rgb(${Math.round(parsedColor[0] / 1.05)},${Math.round(parsedColor[1] / 1.05)},${Math.round(parsedColor[2] / 1.05)})`;
+}
+<!-- prettier-ignore-end -->
 
 window.addEventListener("keydown", grabToggleKey);
 newButton.addEventListener("click", makeNewGrid);
@@ -44,26 +51,29 @@ function makeGridElements(number) {
       div.appendChild(subGrid);
     }
   });
-
   function setupDivElement(elementName) {
     elementName.classList.add("divGrid");
-    elementName.addEventListener("mouseover", () => {
+    elementName.addEventListener("mouseover", (x) => {
       if (brush) {
         if (colorToggle) {
           elementName.style.backgroundColor = randomColor();
-        } else {
-          elementName.style.backgroundColor = colorSelection;
+        } else {          
+          if(x.srcElement.style.backgroundColor === ""){
+            elementName.style.backgroundColor = color;
+          }
         }
       }
     });
+    elementName.addEventListener("mouseover", colorSelection);
   }
+  
 }
 function randomColor() {
-  let color = "";
+  let randomCol = "";
   for (let i = 0; i < 3; i++) {
-    color += Math.floor(Math.random() * (255 - 1)).toString(16);
+    randomCol += Math.floor(Math.random() * (255 - 1)).toString(16);
   }
-  return "#" + color;
+  return "#" + randomCol;
 }
 
 function makeNewGrid() {
