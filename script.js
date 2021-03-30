@@ -12,7 +12,7 @@ let color = "rgb(0,255,0)";
 <!-- prettier-ignore-start -->
 function colorSelection(e) {    
   let parsedColor = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);
-  e.srcElement.style.backgroundColor = `rgb(${Math.round(parsedColor[0] / 1.05)},${Math.round(parsedColor[1] / 1.05)},${Math.round(parsedColor[2] / 1.05)})`;
+  return `rgb(${Math.round(parsedColor[0] / 1.05)},${Math.round(parsedColor[1] / 1.05)},${Math.round(parsedColor[2] / 1.05)})`;
 }
 <!-- prettier-ignore-end -->
 
@@ -33,16 +33,19 @@ function grabToggleKey(e) {
     changeBrushState(brush);
     brushToggle.checked === true
       ? (brushToggle.checked = false)
-      : (brushToggle.checked = true);
-  }
+      : (brushToggle.checked = true);    
+      randomColorToggle.blur();  
+  }  
 }
 makeGridElements(32);
 function makeGridElements(number) {
+
   for (let i = 0; i < number; i++) {
     const divGrid = document.createElement("div");
     setupDivElement(divGrid);
     mainContainer.appendChild(divGrid);
   }
+
   subGridArray = Array.from(mainContainer.querySelectorAll("div"));
   subGridArray.forEach((div) => {
     for (let j = 0; j < number; j++) {
@@ -51,6 +54,7 @@ function makeGridElements(number) {
       div.appendChild(subGrid);
     }
   });
+
   function setupDivElement(elementName) {
     elementName.classList.add("divGrid");
     elementName.addEventListener("mouseover", (x) => {
@@ -60,11 +64,12 @@ function makeGridElements(number) {
         } else {          
           if(x.srcElement.style.backgroundColor === ""){
             elementName.style.backgroundColor = color;
+          } else{
+            elementName.style.backgroundColor = colorSelection(x);
           }
         }
       }
-    });
-    elementName.addEventListener("mouseover", colorSelection);
+    });    
   }
   
 }
@@ -88,6 +93,6 @@ function makeNewGrid() {
 
 function clearGrid() {
   let paintedDivs = document.querySelectorAll(".divGrid");
-  paintedDivs.forEach((x) => (x.style.backgroundColor = "#ffffff"));
+  paintedDivs.forEach((x) => (x.style.backgroundColor = ""));
   this.blur();
 }
