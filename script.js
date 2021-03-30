@@ -2,29 +2,34 @@ const mainContainer = document.querySelector("#mainContainer");
 const newButton = document.querySelector("#newGridButton");
 const clearButton = document.querySelector("#clearGridButton");
 const brushToggle = document.querySelector("#toggleBrush");
+const randomColorToggle = document.querySelector("#toggleColor");
 let brush = true;
 brushToggle.checked = brush;
+let colorToggle = false;
+randomColorToggle.checked = colorToggle;
+let colorSelection = "#00d0c0";
 
 window.addEventListener("keydown", grabToggleKey);
-
 newButton.addEventListener("click", makeNewGrid);
 clearButton.addEventListener("click", clearGrid);
 brushToggle.addEventListener("click", changeBrushState);
+randomColorToggle.addEventListener("click", changeColorState);
 
 function changeBrushState() {
   brush === true ? (brush = false) : (brush = true);
 }
+function changeColorState() {
+  colorToggle === true ? (colorToggle = false) : (colorToggle = true);
+}
 function grabToggleKey(e) {
   if (e.keyCode === 32) {
-    changeBrushState();
+    changeBrushState(brush);
     brushToggle.checked === true
       ? (brushToggle.checked = false)
       : (brushToggle.checked = true);
   }
 }
-
 makeGridElements(32);
-
 function makeGridElements(number) {
   for (let i = 0; i < number; i++) {
     const divGrid = document.createElement("div");
@@ -43,11 +48,22 @@ function makeGridElements(number) {
   function setupDivElement(elementName) {
     elementName.classList.add("divGrid");
     elementName.addEventListener("mouseover", () => {
-      if (brush === true) {
-        elementName.classList.add("divGridHover");
+      if (brush) {
+        if (colorToggle) {
+          elementName.style.backgroundColor = randomColor();
+        } else {
+          elementName.style.backgroundColor = colorSelection;
+        }
       }
     });
   }
+}
+function randomColor() {
+  let color = "";
+  for (let i = 0; i < 3; i++) {
+    color += Math.floor(Math.random() * (255 - 1)).toString(16);
+  }
+  return "#" + color;
 }
 
 function makeNewGrid() {
@@ -61,7 +77,7 @@ function makeNewGrid() {
 }
 
 function clearGrid() {
-  let paintedDivs = document.querySelectorAll(".divGridHover");
-  paintedDivs.forEach((x) => x.classList.remove("divGridHover"));
+  let paintedDivs = document.querySelectorAll(".divGrid");
+  paintedDivs.forEach((x) => (x.style.backgroundColor = "#ffffff"));
   this.blur();
 }

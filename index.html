@@ -9,11 +9,17 @@
   </head>
   <body>
     <div id="controlsContainer">
-      <button id="newGridButton">New grid</button>
-      <button id="clearGridButton">Clear</button>
-      <div id="toggleDiv">
+      <div id="buttonContainer">
+        <button id="newGridButton">New grid</button
+        ><button id="clearGridButton">Clear</button>
+      </div>
+      <div class="toggleDiv">
         <input type="checkbox" id="toggleBrush" />
         <label for="toggleBrush"><span>Brush Toggle (spacebar)</span></label>
+      </div>
+      <div class="toggleDiv">
+        <input type="checkbox" id="toggleColor" />
+        <label for="toggleColor"><span>Random Color</span></label>
       </div>
     </div>
     <div id="mainContainer"></div>
