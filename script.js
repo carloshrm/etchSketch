@@ -66,7 +66,7 @@ function makeGridElements(number) {
           if(x.srcElement.style.backgroundColor === ""){
             elementName.style.backgroundColor = color;
           }else {            
-              elementName.style.backgroundColor = mixColors(x);         
+              elementName.style.backgroundColor = mixColors(x);                      
           }
         }
       }
