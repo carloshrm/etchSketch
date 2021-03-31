@@ -3,24 +3,33 @@ const newButton = document.querySelector("#newGridButton");
 const clearButton = document.querySelector("#clearGridButton");
 const brushToggle = document.querySelector("#toggleBrush");
 const randomColorToggle = document.querySelector("#toggleColor");
+const colorDivs = document.querySelectorAll(".colorDiv");
 let brush = true;
-brushToggle.checked = brush;
 let colorToggle = false;
-randomColorToggle.checked = colorToggle;
-let color = "rgb(0,255,0)";
+let color = "rgb(223,222,255)";
 
-<!-- prettier-ignore-start -->
-function colorSelection(e) {    
-  let parsedColor = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);
-  return `rgb(${Math.round(parsedColor[0] / 1.05)},${Math.round(parsedColor[1] / 1.05)},${Math.round(parsedColor[2] / 1.05)})`;
-}
-<!-- prettier-ignore-end -->
+brushToggle.checked = brush;
+randomColorToggle.checked = colorToggle;
+colorDivs.forEach((x) => {
+  x.style.backgroundColor = x.id;
+  x.addEventListener('click', () => color = x.id);
+});  
 
 window.addEventListener("keydown", grabToggleKey);
 newButton.addEventListener("click", makeNewGrid);
 clearButton.addEventListener("click", clearGrid);
 brushToggle.addEventListener("click", changeBrushState);
 randomColorToggle.addEventListener("click", changeColorState);
+
+<!-- prettier-ignore-start -->
+function mixColors(e) {    
+  let parsedBackground = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);  
+  let currentColor = color.match(/\d{1,3}/g).map(x => x*1.12);  
+  console.log(parsedBackground);
+  return `rgb(${(parsedBackground[0] * currentColor[0])/254},${(parsedBackground[1] *  currentColor[1])/254},${(parsedBackground[2] * currentColor[2])/254})`;   
+}
+<!-- prettier-ignore-end -->
+
 
 function changeBrushState() {
   brush === true ? (brush = false) : (brush = true);
@@ -65,14 +74,14 @@ function makeGridElements(number) {
           if(x.srcElement.style.backgroundColor === ""){
             elementName.style.backgroundColor = color;
           } else{
-            elementName.style.backgroundColor = colorSelection(x);
+            elementName.style.backgroundColor = mixColors(x);
           }
         }
       }
     });    
-  }
-  
+  }  
 }
+
 function randomColor() {
   let randomCol = "";
   for (let i = 0; i < 3; i++) {
