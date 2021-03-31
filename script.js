@@ -9,7 +9,6 @@ let brush = true;
 let color = "rgb(223,222,255)";
 
 brushToggle.checked = brush;
-mixColorToggle.checked = mixToggle;
 colorDivs.forEach((x) => {
   x.style.backgroundColor = x.id;
   x.addEventListener('click', () => color = x.id);
@@ -22,12 +21,13 @@ clearButton.addEventListener("click", clearGrid);
 <!-- prettier-ignore-start -->
 function mixColors(e) {    
   let parsedBackground = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);  
-  let currentColor = color.match(/\d{1,3}/g).map(x => x*1.12);  
+  let selectedColor = color.match(/\d{1,3}/g).map(x => x*1.12);  
   if (mixColorToggle.checked) {
-    return `rgb(${(parsedBackground[0] * currentColor[0])/254},${(parsedBackground[1] *  currentColor[1])/254},${(parsedBackground[2] * currentColor[2])/254})`;       
-  }else{
-    return color;
+    return `rgb(${(parsedBackground[0] * selectedColor[0])/255},${(parsedBackground[1] *  selectedColor[1])/255},${(parsedBackground[2] * selectedColor[2])/255})`;       
+  }else {         
+    return `rgb(${(parsedBackground[0]*0.98)},${(parsedBackground[1]*0.98)},${(parsedBackground[2]*0.98)})`;        
   }
+  
 }
 <!-- prettier-ignore-end --> 
 
@@ -38,7 +38,7 @@ function grabToggleKey(e) {
   }  
 }
 
-makeGridElements(64);
+makeGridElements(32);
 function makeGridElements(number) {
 
   for (let i = 0; i < number; i++) {
@@ -62,11 +62,11 @@ function makeGridElements(number) {
       if (brushToggle.checked) {
         if (randomColorToggle.checked) {
           elementName.style.backgroundColor = randomColor();
-        } else {          
+        }else {          
           if(x.srcElement.style.backgroundColor === ""){
             elementName.style.backgroundColor = color;
-          } else{
-            elementName.style.backgroundColor = mixColors(x);
+          }else {            
+              elementName.style.backgroundColor = mixColors(x);         
           }
         }
       }
