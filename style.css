@@ -60,17 +60,23 @@ button {
   grid-template-columns: 1fr 1fr;
 }
 
-#colorContainer {
+#colorContainer,
+#colorSwitches {
   display: flex;
   background-color: white;
   border: 1px solid rgb(2, 93, 116);
   border-radius: 4px;
   color: rgb(0, 75, 146);
   justify-content: space-evenly;
+  align-items: center;
 }
 .colorDiv {
   margin: 2px;
   border-radius: 4px;
   padding: 0.8rem;
   border: 1px solid rgb(2, 93, 116);
+}
+#colorSwitches {
+  margin-top: 2px;
+  justify-content: flex-start;
 }

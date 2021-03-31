@@ -4,12 +4,12 @@ const clearButton = document.querySelector("#clearGridButton");
 const brushToggle = document.querySelector("#toggleBrush");
 const randomColorToggle = document.querySelector("#toggleColor");
 const colorDivs = document.querySelectorAll(".colorDiv");
+const mixColorToggle = document.querySelector("#mixToggle");
 let brush = true;
-let colorToggle = false;
 let color = "rgb(223,222,255)";
 
 brushToggle.checked = brush;
-randomColorToggle.checked = colorToggle;
+mixColorToggle.checked = mixToggle;
 colorDivs.forEach((x) => {
   x.style.backgroundColor = x.id;
   x.addEventListener('click', () => color = x.id);
@@ -18,35 +18,27 @@ colorDivs.forEach((x) => {
 window.addEventListener("keydown", grabToggleKey);
 newButton.addEventListener("click", makeNewGrid);
 clearButton.addEventListener("click", clearGrid);
-brushToggle.addEventListener("click", changeBrushState);
-randomColorToggle.addEventListener("click", changeColorState);
 
 <!-- prettier-ignore-start -->
 function mixColors(e) {    
   let parsedBackground = e.srcElement.style.backgroundColor.match(/\d{1,3}/g);  
   let currentColor = color.match(/\d{1,3}/g).map(x => x*1.12);  
-  console.log(parsedBackground);
-  return `rgb(${(parsedBackground[0] * currentColor[0])/254},${(parsedBackground[1] *  currentColor[1])/254},${(parsedBackground[2] * currentColor[2])/254})`;   
+  if (mixColorToggle.checked) {
+    return `rgb(${(parsedBackground[0] * currentColor[0])/254},${(parsedBackground[1] *  currentColor[1])/254},${(parsedBackground[2] * currentColor[2])/254})`;       
+  }else{
+    return color;
+  }
 }
-<!-- prettier-ignore-end -->
+<!-- prettier-ignore-end --> 
 
-
-function changeBrushState() {
-  brush === true ? (brush = false) : (brush = true);
-}
-function changeColorState() {
-  colorToggle === true ? (colorToggle = false) : (colorToggle = true);
-}
 function grabToggleKey(e) {
-  if (e.keyCode === 32) {
-    changeBrushState(brush);
-    brushToggle.checked === true
-      ? (brushToggle.checked = false)
-      : (brushToggle.checked = true);    
+  if (e.keyCode === 32) {    
+    brushToggle.checked  ? (brushToggle.checked = false) : (brushToggle.checked = true);
       randomColorToggle.blur();  
   }  
 }
-makeGridElements(32);
+
+makeGridElements(64);
 function makeGridElements(number) {
 
   for (let i = 0; i < number; i++) {
@@ -67,8 +59,8 @@ function makeGridElements(number) {
   function setupDivElement(elementName) {
     elementName.classList.add("divGrid");
     elementName.addEventListener("mouseover", (x) => {
-      if (brush) {
-        if (colorToggle) {
+      if (brushToggle.checked) {
+        if (randomColorToggle.checked) {
           elementName.style.backgroundColor = randomColor();
         } else {          
           if(x.srcElement.style.backgroundColor === ""){
@@ -79,24 +71,30 @@ function makeGridElements(number) {
         }
       }
     });    
+
   }  
 }
 
 function randomColor() {
   let randomCol = "";
   for (let i = 0; i < 3; i++) {
-    randomCol += Math.floor(Math.random() * (255 - 1)).toString(16);
+    randomCol += Math.floor(Math.random() * 255).toString(16);
   }
   return "#" + randomCol;
 }
 
 function makeNewGrid() {
   let newGridSize = +window.prompt("Enter a number for the grid size: ");
-  Math.floor(newGridSize, 100);
+
+  if (newGridSize > 0) {
+    if (newGridSize > 100) newGridSize = 100;    
+  }else{    
+    alert("not a valid number, try again");        
+  }
   while (mainContainer.hasChildNodes()) {
     mainContainer.removeChild(mainContainer.lastChild);
   }
-  makeGridElements(newGridSize);
+  makeGridElements(newGridSize);  
   this.blur();
 }
 
